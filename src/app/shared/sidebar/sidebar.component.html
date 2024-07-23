@@ -1,0 +1,47 @@
+<div class="bg-white relative border border-solid shadow-md h-screen p-5">
+    <div class="flex items-center mb-5">
+        <img src="assets/african-logo.png" alt="Logo" class="w-[150px] mx-auto object-contain">
+    </div>
+
+    <div class="text-center p-5 border-b-2 border-solid">
+        <div class="mx-auto pt-10 pb-4 flex flex-col relative">
+            <img (click)="fileInput.click()"
+                class="flex mx-auto w-[180px] border-solid border-2 cursor-pointer h-[180px] rounded-full object-cover"
+                [src]="imageUrl || 'assets/african-logo.png'" alt="Profile Image" />
+            <img src="assets/cameraPlus.png" class="absolute bottom-2 right-10 w-10 h-10 cursor-pointer"
+                (click)="fileInput.click()" alt="Camera Icon">
+            <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event)" class="hidden">
+        </div>
+        <div class="profile-info">
+            <div class="flex gap-2 items-center justify-center">
+                <h6 class="text-base">{{ name }}</h6><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
+                    viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="30" fill="#4bd37b" />
+                    <path fill="#fff" d="M46 14L25 35.6l-7-7.2l-7 7.2L25 50l28-28.8z" />
+                </svg>
+            </div>
+            <p class="text-green-500">{{ id }}</p>
+        </div>
+    </div>
+
+    <nav class="py-4">
+        <ul>
+            <li *ngFor="let item of navItems; let i = index" class="">
+                <div
+                    class="flex gap-2 hover:bg-green-300 hover:border-solid hover:border-r-4 hover:border-green-600 items-center cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" [attr.viewBox]="'0 0 24 24'">
+                        <path [attr.d]="item.icon" fill="green"></path>
+                    </svg>
+                    <a  (click)="selectFirstSubNav(item)" class="block py-2 px-4 text-black rounded">{{ item.label }}</a>
+                </div>
+                <ul *ngIf="item.isOpen" class="pl-8">
+                    <li *ngFor="let subItem of item.subNav"
+                        class="hover:bg-green-300 hover:border-solid hover:border-r-4 hover:border-green-600 items-center">
+                        <a [routerLink]="subItem.link" class="block py-2 px-4 text-black rounded">{{ subItem.label }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </nav>
+</div>
