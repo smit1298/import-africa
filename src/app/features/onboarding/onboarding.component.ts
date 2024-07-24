@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BackgroundComponent } from '../../shared/background/background.component';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Console } from 'node:console';
 
 @Component({
   selector: 'app-onboarding',
@@ -14,6 +15,7 @@ export class OnboardingComponent {
   constructor(private router: Router) { }
 
   navigateToLogin() {
-    this.router.navigate(['onboarding/login']);
+    console.log("this.router.navigate(['/login']")
+      this.router.navigate(['/onboarding/login']);
   }
 }

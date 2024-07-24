@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { BackgroundComponent } from '../../shared/background/background.component';
 
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [CommonModule, BackgroundComponent],
+  imports: [CommonModule, BackgroundComponent, RouterOutlet],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -22,6 +22,6 @@ export class LoginComponent {
   }
 
   onClickForgotPassword(){
-    this.router.navigate(['/account-recovery']);
+    this.router.navigate(['/recovery']);
   }
 }
