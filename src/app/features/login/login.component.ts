@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(private router: Router) { }
 
   onLoginClick() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard/portal']);
 
   }
 

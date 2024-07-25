@@ -6,3 +6,41 @@
 .login-background-image {
   background-image: url("../public/assets/login-bg.jpg");
 }
+
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow: hidden;
+}
+
+
+.toggle-checkbox {
+  appearance: none;
+  width: 34px;
+  height: 14px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toggle-checkbox:checked {
+  background-color: #10b981;
+}
+
+.toggle-checkbox:checked::after {
+  transform: translateX(20px);
+}
+
+.toggle-checkbox::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: -3px;
+  left: -2px;
+  transition: transform 0.2s;
+}

@@ -1,1 +1,27 @@
-<p>settings works!</p>
+<dashboard-template>
+    <div class="p-5 mt-20 overflow-y-auto">
+
+        <div class="bg-white p-4 rounded-lg border-solid border border-gray-300">
+            <h2 class="text-4xl font-extrabold mb-4">Settings</h2>
+
+            <div class="flex w-1/5 p-2 bg-green-100 rounded-3xl">
+                <button class="py-2 px-4 text-gray-700 font-semibold rounded-lg focus:outline-none"
+                    [ngClass]="{ 'bg-green-500 text-white': selectedTab === 'Profile' }" (click)="selectTab('Profile')">
+                    Profile
+                </button>
+                <button class="py-2 px-4 text-gray-700 font-semibold rounded-lg focus:outline-none"
+                    [ngClass]="{ 'bg-green-500 text-white': selectedTab === 'Kyc' }" (click)="selectTab('Kyc')">
+                    KYC
+                </button>
+                <button class="py-2 px-4 text-gray-700 font-semibold rounded-lg focus:outline-none"
+                    [ngClass]="{ 'bg-green-500 text-white': selectedTab === 'Security' }"
+                    (click)="selectTab('Security')">
+                    Security
+                </button>
+            </div>
+        </div>
+        <profile *ngIf="selectedTab === 'Profile'"></profile>
+        <kyc *ngIf="selectedTab === 'Kyc'"></kyc>
+        <security *ngIf="selectedTab === 'Security'"></security>
+    </div>
+</dashboard-template>

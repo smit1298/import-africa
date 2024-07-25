@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { OnboardingComponent } from './features/onboarding/onboarding.component';
 import { LoginComponent } from './features/login/login.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AccountRecoveryComponent } from './features/account-recovery/account-recovery.component';
 import { MainContentComponent } from './features/main-content/main-content.component';
 import { CreateShipmentComponent } from './features/create-shipment/create-shipment.component';
@@ -15,8 +14,7 @@ export const routes: Routes = [
         redirectTo: 'onboarding',
         pathMatch: 'full'
     }, { path: 'onboarding/login', component: LoginComponent },
-    { path: 'onboarding/recovery', component: AccountRecoveryComponent }
-
+    { path: 'onboarding/recovery', component: AccountRecoveryComponent },
     {
         path: 'onboarding',
         component: OnboardingComponent,
@@ -24,29 +22,32 @@ export const routes: Routes = [
             // { path: 'login', component: LoginComponent },
             // { path: 'recovery', component: AccountRecoveryComponent }
         ]
-    },  
+    },
     {
-        path: 'dashboard',
-        component: DashboardComponent,
+        path: 'dashboard/portal',
+        component: MainContentComponent,
         children: [
-            { path: '', redirectTo: 'portal', pathMatch: 'full' },
-            { path: 'portal', component: MainContentComponent },
-            {
-                path: 'shipments',
-                children: [
-                    { path: 'create', component: CreateShipmentComponent },
-                    { path: 'view', component: ShipmentViewComponent }
-                ]
-            },
-            {
-                path: 'settings',
-                children: [
-                    { path: 'user', component: SettingsComponent }
-                ]
-            }
+            // { path: 'portal', component: MainContentComponent },
+            // {
+            //     path: 'shipments',
+            //     children: [
+            //         { path: 'shipments/create', component: CreateShipmentComponent },                    // { path: 'view', component: ShipmentViewComponent }
+            //     ]
+            // },
+            // {
+            //     path: 'settings',
+            //     children: [
+            //         { path: 'user', component: SettingsComponent }
+            //     ]
+            // }
         ]
     },
-    { path: '**', redirectTo: '/dashboard/portal' }
+    { path: 'shipments/view', component: ShipmentViewComponent },
+    { path: 'shipments/create', component: CreateShipmentComponent },
+    { path: 'settings/user', component: SettingsComponent }
+
+
+
 ];
 
 

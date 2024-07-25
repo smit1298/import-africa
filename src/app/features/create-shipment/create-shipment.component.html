@@ -1,1 +1,186 @@
-<p>create-shipment works!</p>
+<dashboard-template>
+    <div class="container mt-20 mx-auto p-1">
+        <!-- <h1 class="text-2xl font-semibold mb-6">Create Export</h1> -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <div class="flex justify-between mb-6">
+                <div class="flex-1 text-center" *ngFor="let stepNumber of [1, 2, 3, 4]; let i = index">
+                    <div [ngClass]="{
+                    'bg-green-500 text-white': step >= stepNumber,
+                    'bg-gray-200 text-gray-500': step < stepNumber,
+                    'rounded-full h-8 w-8 flex items-center justify-center mx-auto': true
+                }">
+                        {{ stepNumber }}
+                    </div>
+                    <p class="mt-2">{{ stepTitles[i] }}</p>
+                </div>
+            </div>
+
+            <!-- Step 1: Sender Info -->
+            <ng-container *ngIf="step === 1">
+                <div class="max-w-2xl mx-auto p-4">
+                    <form (ngSubmit)="onSubmit()" class="space-y-6">
+                        <h2 class="text-xl font-semibold mb-4">Add Sender</h2>
+                        <p class="mb-4">Search from your saved addresses or create a new address.</p>
+                        <p class="mb-4 text-green-400 text-center">We have previosuly saved {{numberOfAddress}} of your
+                            previous address(es). You can select anyone from the dropdown below or create a new one.</p>
+                        <!-- Search and Clear Form Section -->
+                        <div class="flex justify-between items-center">
+                            <input type="text" class="w-3/4 p-2 border rounded"
+                                placeholder="Search for recent or previous address" />
+                            <button class="text-green-500">Clear form</button>
+                        </div>
+
+                        <!-- Address Details Section -->
+                        <div>
+                            <h2 class="font-semibold">Address Details</h2>
+                            <input type="text" class="w-full p-2 border rounded mt-2"
+                                placeholder="Enter full address" />
+                        </div>
+
+                        <!-- Contact Details Section -->
+                        <div>
+                            <h2 class="font-semibold">Contact Details</h2>
+                            <div class="grid grid-cols-2 gap-4 mt-2">
+                                <input type="text" class="p-2 border rounded" placeholder="First name" />
+                                <input type="text" class="p-2 border rounded" placeholder="Last name" />
+                                <input type="email" class="p-2 border rounded" placeholder="Email Address" />
+                                <input type="tel" class="p-2 border rounded" placeholder="Phone Number" />
+                                <input type="tel" class="col-span-2 p-2 border rounded"
+                                    placeholder="Alternate Phone (Optional)" />
+                            </div>
+                        </div>
+
+                        <!-- Next Step Button -->
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-green-500 px-8 text-white rounded-lg py-2">Next</button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+            </ng-container>
+
+            <!-- Step 2: Receiver Info -->
+            <ng-container *ngIf="step === 2">
+                <div class="w-4/5 mx-auto">
+                    <h2 class="text-xl font-semibold mb-4">Add Receiver Info</h2>
+                    <p class="mb-4">Enter the receiver details.</p>
+                    <form (ngSubmit)="onSubmit()" #receiverForm="ngForm">
+                        <div class="mb-4">
+                            <label for="receiverName" class="block mb-2">Receiver Name</label>
+                            <input id="receiverName" name="receiverName"
+                                class="w-full border border-gray-300 rounded-lg p-2" required />
+                        </div>
+                        <div class="mb-4">
+                            <label for="receiverAddress" class="block mb-2">Receiver Address</label>
+                            <input id="receiverAddress" name="receiverAddress"
+                                class="w-full border border-gray-300 rounded-lg p-2" required />
+                        </div>
+                        <div class="flex justify-end gap-4">
+                            <button type="button" class="bg-gray-200 text-gray-700 rounded-lg px-4 py-2"
+                                (click)="previousStep()">Previous</button>
+                            <button type="submit" class="bg-green-500 text-white rounded-lg px-4 py-2"
+                                [disabled]="!receiverForm.form.valid">Continue</button>
+                        </div>
+                    </form>
+                </div>
+            </ng-container>
+
+            <!-- Step 3: Delivery Info -->
+            <ng-container *ngIf="step === 3">
+                <div class="w-4/5 mx-auto">
+                    <h2 class="text-xl font-semibold mb-4">Add Delivery Info</h2>
+                    <p class="mb-4">What type of delivery option do you prefer?</p>
+                    <form (ngSubmit)="onSubmit()" #deliveryForm="ngForm">
+                        <div class="mb-4">
+                            <label for="warehouse" class="block mb-2">Select Warehouse</label>
+                            <select id="warehouse" class="w-full border border-gray-300 rounded-lg p-2" required>
+                                <option value="" disabled selected>Choose one</option>
+                                <option *ngFor="let warehouse of warehouses" [value]="warehouse">{{ warehouse }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="deliveryType" class="block mb-2">Delivery Type</label>
+                            <select id="deliveryType" class="w-full border border-gray-300 rounded-lg p-2" required>
+                                <option value="" disabled selected>Choose one</option>
+                                <option *ngFor="let type of deliveryTypes" [value]="type">{{ type }}</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-end gap-4">
+                            <button type="button" class="bg-gray-200 text-gray-700 rounded-lg px-4 py-2"
+                                (click)="previousStep()">Previous</button>
+                            <button type="submit" class="bg-green-500 text-white rounded-lg px-4 py-2"
+                                [disabled]="!deliveryForm.form.valid">Continue</button>
+                        </div>
+                    </form>
+                </div>
+            </ng-container>
+
+            <!-- Step 4: Boxes Info -->
+            <ng-container *ngIf="step === 4">
+                <div class="w-4/5 mx-auto">
+                    <h2 class="text-xl font-semibold mb-4">Add Boxes</h2>
+                    <p class="mb-4">What does your shipment contain?</p>
+                    <p class="mb-4">Kindly toggle the switch here to remove/add dimension(s) to your box(es).</p>
+
+                    <!-- Toggle Switch for Dimensions -->
+                    <div class="flex items-center mb-4">
+                        <label for="dimensionToggle" class="mr-2">Toggle Dimensions</label>
+                        <input type="checkbox" id="dimensionToggle" class="toggle-checkbox"
+                            [(ngModel)]="toggleDimensions" />
+                    </div>
+
+                    <!-- <div *ngFor="let box of boxes; let i = index" class="bg-green-100 p-4 mb-4 rounded-lg relative">
+                            <h3 class="font-semibold">Box {{ i + 1 }}</h3>
+                            <button class="absolute top-2 right-2 text-red-500" (click)="deleteBox(i)">Delete box</button>
+                            <div class="mt-4">
+                                <button class="bg-gray-200 text-gray-700 rounded-lg px-4 py-2" (click)="addItem(i)">+ Add
+                                    Item</button>
+                                <div *ngFor="let item of box.items" class="mt-2">
+                                    <label [for]="'item-' + i + '-' + item.id" class="block mb-2">Item {{ item.id + 1 }}</label>
+                                    <input [id]="'item-' + i + '-' + item.id"
+                                        class="w-full border border-gray-300 rounded-lg p-2" />
+                                </div>
+                            </div>
+                        </div> -->
+
+                    <div class="bg-green-100 p-4 mb-4 rounded-lg flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div
+                                class="bg-green-500 text-white rounded-full h-8 w-8 flex items-center justify-center mr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                            </div>
+                            <span>Click to add new box</span>
+                        </div>
+                        <button class="bg-black text-white rounded-lg px-4 py-2" (click)="addBox()">Add new box</button>
+                    </div>
+
+                    <div class="flex justify-end gap-4">
+                        <button type="button" class="bg-gray-200 text-gray-700 rounded-lg px-4 py-2"
+                            (click)="previousStep()">Previous</button>
+                        <button type="submit" class="bg-green-500 text-white rounded-lg px-4 py-2"
+                            (click)="onSubmit()">Continue</button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+        <!-- Modal -->
+        <div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-end items-center">
+            <div class="bg-white h-full p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Review and Submit</h2>
+                <p class="mb-4">Please review all the information before submitting the form.</p>
+                <button type="button" class="bg-green-500 text-white rounded-lg px-4 py-2"
+                    (click)="submitForm()">Finish</button>
+                <button type="button" class="bg-gray-200 text-gray-700 rounded-lg px-4 py-2 ml-2"
+                    (click)="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</dashboard-template>
