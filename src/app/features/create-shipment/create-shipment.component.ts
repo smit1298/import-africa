@@ -20,6 +20,21 @@ export class CreateShipmentComponent {
   toggleDimensions = false;
   stepTitles = ['Sender', 'Receiver', 'Delivery', 'Boxes'];
   numberOfAddress = 2
+
+  notifications = [
+    {
+      message: 'Your shipment was successfully booked. Your tracking number...',
+      time: 'about 21 hours ago',
+    },
+    {
+      message: 'Your shipment with ID EX-AIES-000001-000021 has just been pa...',
+      time: 'about 22 hours ago',
+    },
+    {
+      message: 'Your shipment with ID EX-AIES-000001-000016 has just been pa...',
+      time: '2 days ago',
+    }
+  ];
   clearForm() {
     // Logic to clear the form fields
     const selectElement = document.getElementById('recent-address') as HTMLSelectElement;
@@ -47,6 +62,7 @@ export class CreateShipmentComponent {
       this.nextStep();
     } else {
       this.openModal();
+      this.submitForm()
     }
   }
 
@@ -56,12 +72,13 @@ export class CreateShipmentComponent {
 
   closeModal() {
     this.isModalOpen = false;
+    this.step = 1
+
   }
 
   submitForm() {
     // Handle final form submission
     console.log('Form submitted successfully');
-    this.closeModal();
   }
 
   addBox() {

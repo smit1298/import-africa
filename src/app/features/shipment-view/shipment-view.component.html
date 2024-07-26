@@ -1,3 +1,78 @@
 <dashboard-template>
-    <p>shipment-view works</p>
+    <div class="container mt-20 mx-auto p-1">
+        <h1 class="text-2xl font-bold mb-4">View Shipments</h1>
+        <p class="mb-4">Here you can view and manage available shipments</p>
+        <div class="bg-white p-8 rounded-lg">
+            <div class="mb-4 flex justify-between items-center">
+                <input type="text" placeholder="Search" class="border border-gray-300 rounded p-2" />
+                <div class="flex items-center space-x-2">
+                    <label for="sort" class="text-sm">Sort by</label>
+                    <select id="sort" class="border border-gray-300 rounded p-2">
+                        <option>Descending</option>
+                        <option>Ascending</option>
+                    </select>
+                    <button class="border border-gray-300 rounded p-2">Export</button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-[110%] bg-white">
+                    <thead>
+                        <tr class="bg-green-100">
+                            <th class="text-left py-4 px-4 border-b">Shipment ID</th>
+                            <th class="text-left py-4 px-4 border-b">Date Created</th>
+                            <th class="text-left py-4 px-4 border-b">Tracking Number</th>
+                            <th class="text-left py-4 px-4 border-b">Destination</th>
+                            <th class="text-left py-4 px-4 border-b">Shipment Status</th>
+                            <th class="text-left py-4 px-4 border-b">Approval Status</th>
+                            <th class="text-left py-4 px-4 border-b">Payment Status</th>
+                            <th class="text-left py-4 px-4 border-b">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let shipment of displayedShipments">
+                            <td class="py-2 px-4 border-b">{{ shipment.id }}</td>
+                            <td class="py-2 px-4 border-b">{{ shipment.dateCreated }}</td>
+                            <td class="py-2 px-4 border-b">{{ shipment.trackingNumber }}</td>
+                            <td class="py-2 px-4 border-b">{{ shipment.destination }}</td>
+                            <td class="py-2 px-4 border-b ">{{ shipment.status }}</td>
+                            <td class="py-2 px-4 border-b">
+                                <span class="flex flex-col items-start">
+                                    <span>{{ shipment.approval }}</span>
+                                    <span class="text-gray-500 text-sm">{{ shipment.approvalDate }}</span>
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 border-b">{{ shipment.paymentStatus }}</td>
+                            <td class="py-2 flex px-4 border-b">
+                                <button *ngIf="shipment.status === 'pending'"
+                                    class="bg-gray-200 rounded p-3">Waybill</button>
+                                <button class=" rounded p-[15px]">...</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 flex gap-4 justify-end items-center">
+                <p>Total {{ shipments.length }} shipments</p>
+                <div class="flex items-center space-x-2">
+                    <button class="border border-gray-300 rounded p-2" (click)="onPageChange(currentPage - 1)"
+                        [disabled]="currentPage === 1">
+                        &lt;
+                    </button>
+                    <span>Page {{ currentPage }} of {{ totalPages() }}</span>
+                    <button class="border border-gray-300 rounded p-2" (click)="onPageChange(currentPage + 1)"
+                        [disabled]="currentPage === totalPages()">
+                        &gt;
+                    </button>
+                    <select class="border border-gray-300 rounded p-2" (change)="onItemsPerPageChange($event)">
+                        <option [value]="5">5 / page</option>
+                        <option [value]="10">10 / page</option>
+                        <option [value]="20">20 / page</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </dashboard-template>

@@ -28,7 +28,7 @@
         <ul>
             <li *ngFor="let item of navItems; let i = index" class="">
                 <div (click)="toggleNavItem(item)"
-                    class="flex gap-2 hover:bg-green-300 hover:border-solid hover:border-r-4 hover:border-green-600 items-center cursor-pointer">
+                    class="flex gap-2  hover:bg-green-300 hover:border-solid hover:border-r-4 hover:border-green-600 items-center cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" [attr.viewBox]="'0 0 24 24'">
                         <path [attr.d]="item.icon" fill="green"></path>
                     </svg>
@@ -44,4 +44,12 @@
             </li>
         </ul>
     </nav>
+    <div class="absolute w-4/5 hover:bg-green-300 hover:border-solid hover:border-r-4 hover:border-green-600 bottom-10">
+        <div class="flex gap-2  items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
+                <path fill="green"
+                    d="m17 8l-1.41 1.41L17.17 11H9v2h8.17l-1.58 1.58L17 16l4-4zM5 5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2H5z" />
+            </svg><a href="/onboarding/login" class="block py-2 px-4  text-black rounded">Logout</a>
+        </div>
+    </div>
 </div>
